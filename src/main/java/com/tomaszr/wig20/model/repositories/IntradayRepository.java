@@ -7,5 +7,5 @@ import org.springframework.data.repository.Repository;
 import java.util.List;
 
 public interface IntradayRepository extends Repository<Intraday, Long> {
-    List<String> findByName(String name);
+    List<Intraday> findByName(String name);
 }
