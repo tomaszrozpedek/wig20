@@ -3,28 +3,58 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Intraday</title>
-    <script th:inline="javascript">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Hour');
+            data.addColumn('number', 'Share Price');
+
+
+            var listOfPoints = /*[[${intradaysChart}]]*/ 'default';
+            alert(listOfPoints);
+            data.addRows(listOfPoints);
+
+            // Set chart options
+            var options = {
+                'title': 'ALIOR price',
+                'width': 800,
+                'height': 600
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+        /*]]>*/
     </script>
 </head>
 <body>
 <h1>List</h1>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Date</th>
-        <th>Hour</th>
-        <th>Price</th>
-    </tr>
-    <tr th:each="intraday : ${intradays}">
-        <td th:text="${intraday.id}">123</td>
-        <td th:text="${intraday.name}">Name of share</td>
-        <td th:text="${intraday.date}">Date of transaction</td>
-        <td th:text="${intraday.hour}">Time of transaction</td>
-        <td th:text="${intraday.price}">Price of the trade</td>
-    <!--</tr>-->
-</table>
+<h3 th:text="${intradaysChart}"></h3>
+<div id="chart_div" style="width:800px; height:600px"></div>
+<!--<table>-->
+<!--<tr>-->
+<!--<th>ID</th>-->
+<!--<th>Name</th>-->
+<!--<th>Date</th>-->
+<!--<th>Hour</th>-->
+<!--<th>Price</th>-->
+<!--</tr>-->
+<!--<tr th:each="intraday : ${intradays}">-->
+<!--<td th:text="${intraday.id}">123</td>-->
+<!--<td th:text="${intraday.name}">Name of share</td>-->
+<!--<td th:text="${intraday.date}">Date of transaction</td>-->
+<!--<td th:text="${intraday.hour}">Time of transaction</td>-->
+<!--<td th:text="${intraday.price}">Price of the trade</td>-->
+<!--</table>-->
 
 </body>
 </html>

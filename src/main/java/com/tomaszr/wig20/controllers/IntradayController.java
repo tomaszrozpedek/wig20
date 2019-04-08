@@ -21,6 +21,7 @@ public class IntradayController {
     public String getIntraday(Model model) {
         model.addAttribute("intradays", intradayRepository.findByName("ALIOR"));
         intradayService.getIntraday("ALIOR");
+        model.addAttribute("intradaysChart", intradayService.getIntraday("ALIOR"));
         return ("intraday");
     }
 }

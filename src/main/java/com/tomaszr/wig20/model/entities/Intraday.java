@@ -23,7 +23,7 @@ public class Intraday {
     private Long id;
     private String name;
     private String date;
-    private Long hour;
+    private String hour;
     private Double price;
 }
 
