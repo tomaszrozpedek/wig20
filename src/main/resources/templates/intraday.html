@@ -14,47 +14,56 @@
             // Create the data table.
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Hour');
-            data.addColumn('number', 'Share Price');
+            data.addColumn('number', 'Share_Price');
 
 
             var listOfPoints = /*[[${intradaysChart}]]*/ 'default';
-            alert(listOfPoints);
+            <!--alert(listOfPoints);-->
             data.addRows(listOfPoints);
 
             // Set chart options
             var options = {
-                'title': 'ALIOR price',
-                'width': 800,
-                'height': 600
+                'title': /*[[${shareName}]]*/,
+                'width': 600,
+                'height': 600,
+                'chartArea': {'width': '90%', 'height': '55%'},
+                hAxis: {
+                    // direction:-1,
+                    slantedText:true,
+                    slantedTextAngle:90 // here you can even use 180
+                }
             };
 
             // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.LineChart(document.getElementById('share_chart'));
             chart.draw(data, options);
         }
 
         /*]]>*/
     </script>
 </head>
-<body>
-<h1>List</h1>
-<h3 th:text="${intradaysChart}"></h3>
-<div id="chart_div" style="width:800px; height:600px"></div>
-<!--<table>-->
-<!--<tr>-->
-<!--<th>ID</th>-->
-<!--<th>Name</th>-->
-<!--<th>Date</th>-->
-<!--<th>Hour</th>-->
-<!--<th>Price</th>-->
-<!--</tr>-->
-<!--<tr th:each="intraday : ${intradays}">-->
-<!--<td th:text="${intraday.id}">123</td>-->
-<!--<td th:text="${intraday.name}">Name of share</td>-->
-<!--<td th:text="${intraday.date}">Date of transaction</td>-->
-<!--<td th:text="${intraday.hour}">Time of transaction</td>-->
-<!--<td th:text="${intraday.price}">Price of the trade</td>-->
-<!--</table>-->
+<body bgcolor="#99CC66">
+
+<!--<form method="post" th:action="@{/}" th:object="${operationModel}">-->
+    <!--<input type="text" th:field="*{a}" placeholder="0">     <input type="text" th:field="*{b}" placeholder="0">-->
+    <!--<br>-->
+
+<div>
+    <h1>Select share name and date range</h1>
+    <hr>
+    <form th:action="@{/intraday    }" method="post">
+        <input type="text" th:name="shareName" th:value=${shareName}>
+        <!--<br>-->
+        <input type="text" th:name="startDate" th:value=${startDate}>
+        <!--<br>-->
+        <input type="text" th:name="endDate" th:value=${endDate}>
+        <br><br>
+        <input type="submit" class="button" name="drawChart" value="Draw chart">
+    </form>
+</div>
+<hr>
+<!--<h3 th:text="${intradaysChart}"></h3>-->
+<div id="share_chart" style="width:800px; height:600px"></div>
 
 </body>
 </html>
