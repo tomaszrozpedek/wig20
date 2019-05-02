@@ -14,7 +14,7 @@
             // Create the data table.
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Hour');
-            data.addColumn('number', 'Share_Price');
+            data.addColumn('number', 'Intraday Price');
 
 
             var listOfPoints = /*[[${intradaysChart}]]*/ 'default';
@@ -24,9 +24,8 @@
             // Set chart options
             var options = {
                 'title': /*[[${shareName}]]*/,
-                'width': 600,
-                'height': 600,
-                'chartArea': {'width': '90%', 'height': '55%'},
+                'chartArea': {left:60, top:50,'width': '80%', 'height': '45%'},
+                vAxis: {format:'0.00'},
                 hAxis: {
                     // direction:-1,
                     slantedText:true,
@@ -40,30 +39,51 @@
         }
 
         /*]]>*/
+
+
+
     </script>
 </head>
 <body bgcolor="#99CC66">
 
 <!--<form method="post" th:action="@{/}" th:object="${operationModel}">-->
-    <!--<input type="text" th:field="*{a}" placeholder="0">     <input type="text" th:field="*{b}" placeholder="0">-->
-    <!--<br>-->
+<!--<input type="text" th:field="*{a}" placeholder="0">     <input type="text" th:field="*{b}" placeholder="0">-->
+<!--<br>-->
 
 <div>
     <h1>Select share name and date range</h1>
     <hr>
     <form th:action="@{/intraday    }" method="post">
-        <input type="text" th:name="shareName" th:value=${shareName}>
-        <!--<br>-->
-        <input type="text" th:name="startDate" th:value=${startDate}>
-        <!--<br>-->
-        <input type="text" th:name="endDate" th:value=${endDate}>
+        <table>
+            <tr>
+                <td align="left">
+                    Share Name:
+                </td>
+                <th><input type="text" id="shareName" th:name="shareName"
+                           th:value=${#strings.toUpperCase(shareName)}></th>
+            </tr>
+            <tr>
+                <td align="left">
+                    Start Date:
+                </td>
+                <td><input type="text" id="startDate" th:name="startDate"
+                           th:value=${startDate}></td>
+            </tr>
+            <tr>
+                <td align="left">
+                    End Date:
+                </td>
+                <td><input type="text" id="endDate" th:name="endDate"
+                           th:value=${endDate}></td>
+            </tr>
+        </table>
+
         <br><br>
         <input type="submit" class="button" name="drawChart" value="Draw chart">
     </form>
 </div>
 <hr>
-<!--<h3 th:text="${intradaysChart}"></h3>-->
-<div id="share_chart" style="width:800px; height:600px"></div>
+<div id="share_chart" style="width:100%; height:400px"></div>
 
 </body>
 </html>
